@@ -16,10 +16,18 @@
 #define UPDATE_PERIOD_MS 100  //update period for LEDs
 
 //hardware handles
+#define LED1 PIN_PA5
+#define LED2 PIN_PA4
+#define LED3 PIN_PA3
+#define LED4 PIN_PB4
+#define LED5 PIN_PB2
+#define LED6 PIN_PB3
+#define LED78 PIN_PC0
+#define INT_ACTIVITY PIN_PA6
+#define INT_DOUBLETAP PIN_PB5
 const byte numLEDs = 7;
-const pin_size_t LEDPins[numLEDs] = { PIN_PA5, PIN_PA4, PIN_PA3, PIN_PB4, PIN_PB2, PIN_PB3, PIN_PC0 };
-const pin_size_t ADXLInterrupt1Pin = PIN_PB5;
-const pin_size_t ADXLInterrupt2Pin = PIN_PA6;
+const pin_size_t LEDPins[numLEDs] = { LED1, LED2, LED3, LED4, LED5, LED6, LED78 };
+
 ADXL345 adxl = ADXL345();
 
 //State variables
@@ -77,13 +85,13 @@ void configureADXL() {
   adxl.setDoubleTapLatency(80); // 1.25 ms per increment
   adxl.setDoubleTapWindow(500); // 1.25 ms per increment
   adxl.doubleTapINT(true);
-  attachInterrupt(digitalPinToInterrupt(ADXLInterrupt1Pin), ISR_DoubleTap, RISING);
+  attachInterrupt(digitalPinToInterrupt(INT_DOUBLETAP), ISR_DoubleTap, RISING);
 
   //activity
   adxl.setActivityXYZ(1, 1, 1);
   adxl.setActivityThreshold(20); // 62.5mg per increment
   adxl.ActivityINT(true);
-  attachInterrupt(digitalPinToInterrupt(ADXLInterrupt2Pin), ISR_Activity, RISING);
+  attachInterrupt(digitalPinToInterrupt(INT_ACTIVITY), ISR_Activity, RISING);
 }
 
 //ISR for double tap detection
@@ -99,7 +107,7 @@ void ISR_Activity() {
 //clears interrupt and prints notification if desired
 void checkInterrupts(bool printNotifications) {
   //there were no interrupts
-  if (!(digitalRead(ADXLInterrupt1Pin) || digitalRead(ADXLInterrupt2Pin)))
+  if (!(digitalRead(INT_ACTIVITY) || digitalRead(INT_DOUBLETAP)))
     return;
 
   //clear interrupts
@@ -130,8 +138,8 @@ byte initHardware() {
   }
 
   //ADXL interrupts
-  pinMode(ADXLInterrupt1Pin, INPUT);
-  pinMode(ADXLInterrupt2Pin, INPUT);
+  pinMode(INT_ACTIVITY, INPUT);
+  pinMode(INT_DOUBLETAP, INPUT);
 
   //Accel
   adxl.powerOn();

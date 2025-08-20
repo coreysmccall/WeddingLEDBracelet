@@ -23,8 +23,15 @@
 #define UPDATE_PERIOD_MS 66  //update period for LEDs
 
 //hardware handles
+#define LED1 PIN_PA5
+#define LED2 PIN_PA4
+#define LED3 PIN_PA3
+#define LED4 PIN_PB4
+#define LED5 PIN_PB2
+#define LED6 PIN_PB3
+#define LED78 PIN_PC0
 const byte numLEDPins = 7;
-const pin_size_t LEDPins[numLEDPins] = { PIN_PA5, PIN_PA4, PIN_PA3, PIN_PB4, PIN_PB2, PIN_PB3, PIN_PC0 };
+const pin_size_t LEDPins[numLEDPins] = { LED1, LED2, LED3, LED4, LED5, LED6, LED78 };
 
 
 //State variables
@@ -124,10 +131,10 @@ void initPWM() {
 //analogWrite that works with portmuxed pins
 void analogWriteWithMUX(pin_size_t pin, byte duty) {
   switch (pin) { //LED4 and LED6 use alternate pins
-    case PIN_PB4:
+    case LED4:
       TCA0.SPLIT.LCMP1 = duty;
       break;
-    case PIN_PB3:
+    case LED6:
       TCA0.SPLIT.LCMP0 = duty;
       break;
     default:
