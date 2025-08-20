@@ -29,29 +29,27 @@ The hardware contains:
 | Pin | Name | Peripheral       | Notes          |
 |-----|------|------------------|----------------|
 | 1   | NC   | -                |  -             |
-| 2   | PA3  | TCA0-W3          | LED3*          |
+| 2   | PA3  | TCA0-W3          | LED3           |
 | 3   | GND  | -                | Power Supply   |
 | 4   | VDD  | -                | Power Supply   |
-| 5   | PA4  | TCA0-W4          | LED2*          |
-| 6   | PA5  | TCA0-W5          | LED1*          |
-| 7   | PA6  | INT              | ADXL INT2**    |
+| 5   | PA4  | TCA0-W4          | LED2           |
+| 6   | PA5  | TCA0-W5          | LED1           |
+| 7   | PA6  | INT              | ADXL INT2      |
 | 8   | PA7  | AC0-P0           | Touch Pad      |
-| 9   | PB5  | INT              | ADXL INT1**    |
-| 10  | PB4  | TCA0-W1 (ALT)    | LED4*          |
-| 11  | PB3  | TCA0-W0 (ALT)    | LED6*          |
-| 12  | PB2  | TCA0-W2          | LED5*          |
+| 9   | PB5  | INT              | ADXL INT1      |
+| 10  | PB4  | TCA0-W1 (ALT)    | LED4           |
+| 11  | PB3  | TCA0-W0 (ALT)    | LED6           |
+| 12  | PB2  | TCA0-W2          | LED5           |
 | 13  | PB1  | I2C: SDA         | ADXL at 0x1D   |
 | 14  | PB0  | I2C: SCL         | -              |
-| 15  | PC0  | TCB0-W0 (ALT)    | LED78*         |
+| 15  | PC0  | TCB0-W0 (ALT)    | LED78          |
 | 16  | NC   | -                | -              |
 | 17  | NC   | -                | -              |
 | 18  | NC   | -                | -              |
 | 19  | PA0  | UPDI             | -              |
 | 20  | PA1  | UART-TX (ALT)    | -              |
 
-\*Active HIGH
-
-\*\*Active LOW
+All LED and interrupt pins are active high.
 
 
 ## Programming
