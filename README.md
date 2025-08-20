@@ -5,7 +5,7 @@ Hardware information and firmware for Allison's LED Wedding Bracelet
 
 The bracelet can be worn by snapping the edge connector into either the large size (outer) or small size (inner) ZIF connector. The ZIF connection is the power switch and the bracelet clasp
 
-![Clasp](images/clasp.png)
+<img src="images/clasp.png" alt="clasp" width="300">
 
 ## Contents
 
@@ -67,7 +67,7 @@ Get a 3.3V USB-UART adapter (e.g., [DSD TECH SH-U09C5](https://a.co/d/dYEtSY1)) 
 
 The clasp must be closed to power the board, so close the bracelet using the outer clasp, and connect the programmer to the inner clasp as shown below:
 
-![Programmer](images/programmer.png)
+<img src="images/programmer.png" alt="programmer" width="300">
 
 ### Environment Setup
 1. Download [Arduino](https://www.arduino.cc/en/software/) v2 IDE
@@ -86,7 +86,7 @@ The clasp must be closed to power the board, so close the bracelet using the out
 - [ATTINY816 Datasheet](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATtiny417-814-816-817-DataSheet-DS40002288A.pdf)  
 - [ADXL345 Datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/adxl345.pdf)  
 - [Example UPDI Programmer Schematic](https://learn.adafruit.com/adafruit-updi-friend/downloads)  
-- [megaTinyCore Repository](hhttps://github.com/SpenceKonde/megaTinyCore/tree/master)  
+- [megaTinyCore Repository](https://github.com/SpenceKonde/megaTinyCore/tree/master)  
 
 
 
