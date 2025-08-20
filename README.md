@@ -5,7 +5,7 @@ Hardware information and firmware for Allison's LED Wedding Bracelet
 
 The bracelet can be worn by snapping the edge connector into either the large size (outer) or small size (inner) ZIF connector. The ZIF connection is the power switch and the bracelet clasp
 
-<img src="images/clasp.png" alt="clasp" width="300">
+<img src="images/clasp.png" alt="clasp" width="400">
 
 ## Contents
 
@@ -67,15 +67,14 @@ Get a 3.3V USB-UART adapter (e.g., [DSD TECH SH-U09C5](https://a.co/d/dYEtSY1)) 
 
 The clasp must be closed to power the board, so close the bracelet using the outer clasp, and connect the programmer to the inner clasp as shown below:
 
-<img src="images/programmer.png" alt="programmer" width="300">
+<img src="images/programmer.png" alt="programmer" width="400">
 
 ### Environment Setup
 1. Download [Arduino](https://www.arduino.cc/en/software/) v2 IDE
 1. In Settings, add the following to the Additional Boards Manager URLs: http://drazzy.com/package_drazzy.com_index.json
 1. Install the "megaTinyCore" board package from the Boards Manager
 1. Install the "SparkFun ADXL345 Arduino Library" from the Library Manager
-1. Set your Tools options like the following:
-![Board Settings](images/boardsettings.png)
+1. Set your Tools options like the following: <br /><img src="images/boardsettings.png" alt="Board Settings" width="500">
 1. megaTinyCore can save these settings to your board's hardware fuse settings with "Burn Bootloader"
 1. You can now load the firmware from this repository and upload using Sketch > Upload Using Programmer
 1. Optionally, connect to the board's UART TX with a separate serial port connection outside of Arduino (e.g., minicom)
