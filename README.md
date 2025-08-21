@@ -42,7 +42,7 @@ The hardware contains:
 | 12  | PB2  | TCA0-W2          | LED5 (5th red)     |
 | 13  | PB1  | I2C: SDA         | ADXL at 0x1D       |
 | 14  | PB0  | I2C: SCL         | -                  |
-| 15  | PC0  | TCB0-W0 (ALT)    | LED78(both orange) |
+| 15  | PC0  | TCB0-W0 (ALT)    | LED78(both yellow) |
 | 16  | PC1  | -                | NC                 |
 | 17  | PC2  | -                | NC                 |
 | 18  | PC3  | -                | NC                 |
