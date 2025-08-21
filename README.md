@@ -5,7 +5,7 @@ Hardware information and firmware for Allison's LED Wedding Bracelet
 
 The bracelet can be worn by snapping the edge connector into either the large size (outer) or small size (inner) ZIF connector. The ZIF connection is the power switch and the bracelet clasp, so it will activate when the connector is closed. The battery should be inserted with the **POSITIVE SIDE UP** as shown.
 
-<img src="images/clasp.png" alt="clasp" width="400">
+<img src="images/clasp.png" alt="clasp" width="300" style="margin-right:100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/twinkle.gif" alt="twinkle" width="300">
 
 ## Contents
 
