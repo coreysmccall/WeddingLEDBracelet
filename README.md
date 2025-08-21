@@ -26,28 +26,28 @@ The hardware contains:
 
 ### MCU Pinout:
 
-| Pin | Name | Peripheral       | Notes          |
-|-----|------|------------------|----------------|
-| 1   | NC   | -                |  -             |
-| 2   | PA3  | TCA0-W3          | LED3           |
-| 3   | GND  | -                | Power Supply   |
-| 4   | VDD  | -                | Power Supply   |
-| 5   | PA4  | TCA0-W4          | LED2           |
-| 6   | PA5  | TCA0-W5          | LED1           |
-| 7   | PA6  | INT              | ADXL INT2      |
-| 8   | PA7  | AC0-P0           | Touch Pad      |
-| 9   | PB5  | INT              | ADXL INT1      |
-| 10  | PB4  | TCA0-W1 (ALT)    | LED4           |
-| 11  | PB3  | TCA0-W0 (ALT)    | LED6           |
-| 12  | PB2  | TCA0-W2          | LED5           |
-| 13  | PB1  | I2C: SDA         | ADXL at 0x1D   |
-| 14  | PB0  | I2C: SCL         | -              |
-| 15  | PC0  | TCB0-W0 (ALT)    | LED78          |
-| 16  | NC   | -                | -              |
-| 17  | NC   | -                | -              |
-| 18  | NC   | -                | -              |
-| 19  | PA0  | UPDI             | -              |
-| 20  | PA1  | UART-TX (ALT)    | -              |
+| Pin | Name | Peripheral       | Notes              |
+|-----|------|------------------|--------------------|
+| 1   | PA2  | -                | NC                 |
+| 2   | PA3  | TCA0-W3          | LED3 (3rd red)     |
+| 3   | GND  | -                | Power Supply       |
+| 4   | VDD  | -                | Power Supply       |
+| 5   | PA4  | TCA0-W4          | LED2 (2nd red)     |
+| 6   | PA5  | TCA0-W5          | LED1 (1st red)     |
+| 7   | PA6  | INT              | ADXL INT2          |
+| 8   | PA7  | PTC-X3/Y3        | Heart Touch Pad    |
+| 9   | PB5  | INT              | ADXL INT1          |
+| 10  | PB4  | TCA0-W1 (ALT)    | LED4 (4th red)     |
+| 11  | PB3  | TCA0-W0 (ALT)    | LED6 (6th red)     |
+| 12  | PB2  | TCA0-W2          | LED5 (5th red)     |
+| 13  | PB1  | I2C: SDA         | ADXL at 0x1D       |
+| 14  | PB0  | I2C: SCL         | -                  |
+| 15  | PC0  | TCB0-W0 (ALT)    | LED78(both orange) |
+| 16  | PC1  | -                | NC                 |
+| 17  | PC2  | -                | NC                 |
+| 18  | PC3  | -                | NC                 |
+| 19  | PA0  | UPDI             | NC                 |
+| 20  | PA1  | UART-TX (ALT)    | NC                 |
 
 All LED and interrupt pins are active high.
 
@@ -74,6 +74,7 @@ The clasp must be closed to power the board, so close the bracelet using the out
 1. In Settings, add the following to the Additional Boards Manager URLs: http://drazzy.com/package_drazzy.com_index.json
 1. Install the "megaTinyCore" board package from the Boards Manager
 1. Install the "SparkFun ADXL345 Arduino Library" from the Library Manager
+1. Install the megaTinyCore PTC Library [here](https://github.com/SpenceKonde/megaTinyCore/tree/master/megaavr/libraries/PTC)
 1. Set your Tools options like the following: <br /><img src="images/boardsettings.png" alt="Board Settings" width="500">
 1. megaTinyCore can save these settings to your board's hardware fuse settings with "Burn Bootloader"
 1. You can now load the firmware from this repository and upload using Sketch > Upload Using Programmer
