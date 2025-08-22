@@ -5,7 +5,7 @@ Hardware information and firmware for Allison's LED Wedding Bracelet
 
 The bracelet can be worn by snapping the edge connector into either the large size (outer) or small size (inner) ZIF connector. The ZIF connection is the power switch and the bracelet clasp, so it will activate when the connector is closed. The battery should be inserted with the **POSITIVE SIDE UP** as shown.
 
-<img src="images/clasp.png" alt="clasp" width="300" style="margin-right:100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/twinkle.gif" alt="twinkle" width="300">
+<img src="images/clasp.png" alt="clasp" width="300>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/twinkle.gif" alt="twinkle" width="300">
 
 ## Contents
 
@@ -85,6 +85,8 @@ The clasp must be closed to power the board, so close the bracelet using the out
 ## Useful Links
 - [ATTINY816 Datasheet](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATtiny417-814-816-817-DataSheet-DS40002288A.pdf)  
 - [ADXL345 Datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/adxl345.pdf)  
+- [Red LED Datasheet](https://www.lcsc.com/product-detail/C7371909.html)
+- [Yellow LED Datasheet](https://www.lcsc.com/product-detail/C7371908.html)
 - [Example UPDI Programmer Schematic](https://learn.adafruit.com/assets/127237)  
 - [megaTinyCore Repository](https://github.com/SpenceKonde/megaTinyCore/tree/master)  
 
