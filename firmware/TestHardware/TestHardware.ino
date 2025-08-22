@@ -23,9 +23,6 @@
 #define LED_UPDATE_PERIOD_MS 100   //update period for LEDs
 #define ACCEL_POLL_PERIOD_MS 3000  //update period for Accel data printing
 
-//wait before starting LEDs
-#define LED_DELAYED_START LED_UPDATE_PERIOD_MS  //don't start the LEDs in the first period (useful for power measurement)
-
 //hardware handles
 #define LED1 PIN_PA5
 #define LED2 PIN_PA4
@@ -232,7 +229,7 @@ void calculateAnimationRandomize() {
 //update the LEDs
 void updateLEDs() {
   digitalWrite(LEDPins[currentLED], LOW);
-  digitalWrite(LEDPins[nextLED], (millis() > LED_DELAYED_START) ? HIGH : LOW); //dont turn on the LEDs yet
+  digitalWrite(LEDPins[nextLED], HIGH);
   currentLED = nextLED;
 }
 
