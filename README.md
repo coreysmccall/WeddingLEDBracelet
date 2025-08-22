@@ -1,5 +1,5 @@
 # WeddingLEDBracelet
-Hardware information and firmware for Allison's LED Wedding Bracelet
+Hardware information and firmware for a wedding-themed LED Bracelet.
 
 ![PCB](images/PCB.png)
 
