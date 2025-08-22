@@ -21,7 +21,7 @@ The hardware contains:
 * 8x LEDS controlled with 7x PDM channels
 * 1x Capacitive touch pad (heart)
 * ADXL345 Accelerometer with motion and tap detection
-* 3.0V CR2450 coin cell (Warning: never connect > 3.9V!)
+* 3.0V CR2450 coin cell
 * A breakout "programmer" PCB for accessing UART and UPDI pins
 
 ### MCU Pinout:
@@ -80,9 +80,14 @@ The clasp must be closed to power the board, so close the bracelet using the out
 1. You can now load the firmware from this repository and upload using Sketch > Upload Using Programmer
 1. Optionally, connect to the board's UART TX for debugging using a separate serial port connection outside of Arduino (e.g., minicom). This pin is exposed on the programmer breakout labeled "RX". 
 
-
+## Notes
+- The absolute max voltage of the least tolerant part (accelerometer) is 3.9V. Don't exceed this.
+- Power optimizations of the accelerometer, PWM phase offsets, or MCU power states are probably not the worth the effort. At 1MHz MCU clock and default accelerometer settings, the MCU+accelerometer consumes 1mA, then each LED consumes ~7mA.
+- MCU brownout is 1.8V and Accelerometer brownout is 2.0V. This appears to be safe with CR2450, at least with reasonable PWM-based LED patterns and low MCU clock
+- Some example power 
 
 ## Useful Links
+- [Power tests for this bracelet](PowerTests.md)
 - [ATTINY816 Datasheet](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATtiny417-814-816-817-DataSheet-DS40002288A.pdf)  
 - [ADXL345 Datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/adxl345.pdf)  
 - [Red LED Datasheet](https://www.lcsc.com/product-detail/C7371909.html)
