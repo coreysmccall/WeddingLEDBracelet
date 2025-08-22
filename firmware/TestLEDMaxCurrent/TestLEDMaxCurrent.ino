@@ -7,7 +7,7 @@
  */
 
 //select mode
-#define STEP_MODE 0 //set to 1 to step instead of turn on all LEDs
+#define STEP_MODE 1 //set to 1 to step instead of turn on all LEDs
 
 //hardware handles
 #define LED1 PIN_PA5
@@ -29,7 +29,6 @@ void setup() {
 
 void loop() {
   static byte LEDsOn = 0;
-  Serial.println(LEDsOn);
 
   //step up the LED power in a sawtooth
   for (int i = 0; i < numLEDPins; i++)
