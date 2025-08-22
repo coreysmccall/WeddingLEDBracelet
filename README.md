@@ -60,7 +60,7 @@ Do not connect the programmer power when the battery is being used!
 ### Wire up the Programmer
 Get a 3.3V USB-UART adapter (e.g., [DSD TECH SH-U09C5](https://a.co/d/dYEtSY1)) and connect to the programmer breakout in the following way:
 
-* **UDPI:** Connecting the RX port of a USB-to-UART adapter to the UPDI pin. Also connect the TX port of the adapter to the UDPI pin through a series 1KΩ resitor like the drawing [here](https://github.com/mraardvark/pyupdi/blob/master/README.md).
+* **UDPI:** Connect the RX port of a USB-to-UART adapter to the UPDI pin. Also connect the TX port of the adapter to the UDPI pin through a series 1KΩ resitor like the drawing [here](https://github.com/mraardvark/pyupdi/blob/master/README.md).
 * **GND:** Connect to the USB-to-UART adapter's ground pin.
 * **+3V:** Connect to 3.3V. Be careful using voltage rails from the USB-to-UART adapters, many are 5V and this board is not 5V tolerant. Do not connect this pin when using the battery!
 * **RX:** Optionally, connect this to another USB-to-UART RX port for debugging
@@ -82,9 +82,8 @@ The clasp must be closed to power the board, so close the bracelet using the out
 
 ## Notes
 - The absolute max voltage of the least tolerant part (accelerometer) is 3.9V. Don't exceed this.
-- Power optimizations of the accelerometer, PWM phase offsets, or MCU power states are probably not the worth the effort. At 1MHz MCU clock and default accelerometer settings, the MCU+accelerometer consumes 1mA, then each LED consumes ~7mA.
-- MCU brownout is 1.8V and Accelerometer brownout is 2.0V. This appears to be safe with CR2450, at least with reasonable PWM-based LED patterns and low MCU clock
-- Some example power 
+- Power optimizations of the accelerometer, PWM phase offsets, and MCU power states are probably not worth the effort. At 1MHz MCU clock and default accelerometer settings, the MCU+accelerometer only consumes 1mA, then the LEDs consume ~7mA each.
+- MCU brownout is at 1.8V, but Accelerometer brownout could be as high as 2.0V depending on the conditions. This appears to be generally safe with the CR2450, especially with reasonable PWM-based LED patterns and low MCU clock. Some power measurements verifying this are shown in [PowerTests.md](PowerTests.md).
 
 ## Useful Links
 - [Power tests for this bracelet](PowerTests.md)
