@@ -18,7 +18,7 @@ The bracelet can be worn by snapping the edge connector into either the large si
 The hardware contains:
 
 * ATTINY816 MCU
-* 8x LEDS controlled with 7x PDM channels
+* 8x LEDS controlled with 7x PWM channels
 * 1x Capacitive touch pad (heart)
 * ADXL345 Accelerometer with motion and tap detection
 * 3.0V CR2450 coin cell
@@ -82,9 +82,8 @@ The clasp must be closed to power the board, so close the bracelet using the out
 
 ## Notes
 - The absolute max voltage of the least tolerant part (accelerometer) is 3.9V. Don't exceed this.
-- Power optimizations of the accelerometer, PWM phase offsets, or MCU power states are probably not the worth the effort. At 1MHz MCU clock and default accelerometer settings, the MCU+accelerometer consumes 1mA, then each LED consumes ~7mA.
-- MCU brownout is 1.8V and Accelerometer brownout is 2.0V. This appears to be safe with CR2450, at least with reasonable PWM-based LED patterns and low MCU clock
-- Some example power 
+- Software-based power optimizations are probably not the worth the effort. At 1MHz MCU clock and default accelerometer settings, the battery should be able to maintain up to 25 mA constant draw and a voltage well above brownout (2.0 V) for at least two hours. Some measurements verifying this are shown in [PowerTests.md](PowerTests.md).
+
 
 ## Useful Links
 - [Power tests for this bracelet](PowerTests.md)

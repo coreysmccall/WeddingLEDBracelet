@@ -12,13 +12,15 @@ $$
 
 <img src="images/tests/PSU_LEDCurrentStep_I.png" alt="PSU_LEDCurrentStep_I" height="500">
 
-Using the battery, it is able to source around ~38 mA at the same maximum step, resulting in a voltage drop of about 200 mV to ~2.7 V (~8 Ω ESR):
+Using the battery, it is able to source around ~38 mA at the same maximum step, resulting in a voltage drop of about 300 mV to ~2.7 V (~8 Ω ESR):
 
 <img src="images/tests/EEMB_LEDCurrentStep_I.png" alt="EEMB_LEDCurrentStep_I" height="270">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/tests/EEMB_LEDCurrentStep_V.png" alt="EEMB_LEDCurrentStep_V" height="250">
 
 The battery is also able to sustain >30 mA DC drain for several minutes with only slowly decreasing voltage plateauing around ~2.5V (~17 Ω ESR). This test was run from [TestLEDMaxCurrent.ino](firmware/TestLEDMaxCurrent/TestLEDMaxCurrent.ino) (not in step mode):
 
 <img src="images/tests/EEMB_drain_I.png" alt="EEMB_drain_I" height="270">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/tests/EEMB_drain_V.png" alt="EEMB_drain_V" height="250">
+
+After 2 hours, the voltage was at 2.37 V at 25 mA (~25 Ω ESR).
 
 ## PWM Pattern Operation
 The Twinkle pattern in [TestPWMs.ino](firmware/TestPWMs/TestPWMs.ino) is a good indication of a typical LED pattern with reasonable brightness (shown in the [README](README.md) gif). This pattern randomly adjusts LED brightness via PWM without any attention to phase alignment. The individual duty cycles are low, but occasionally both PWM timers align and all 8 LEDs briefly draw max current for up to the max duty cycle (~16% @ ~500 Hz = ~310 µs). 
