@@ -74,6 +74,7 @@ The clasp must be closed to power the board, so close the bracelet using the out
 1. In Settings, add the following to the Additional Boards Manager URLs: http://drazzy.com/package_drazzy.com_index.json
 1. Install the "megaTinyCore" board package from the Boards Manager
 1. Install the "SparkFun ADXL345 Arduino Library" from the Library Manager
+1. Update the I2C address in `[arduino library folder]/SparkFun_ADXL345_Arduino_Library/src/SparkFun_ADXL345.cpp` to be: `#define ADXL345_DEVICE (0x1D)`
 1. Install the megaTinyCore PTC Library [here](https://github.com/SpenceKonde/megaTinyCore/tree/master/megaavr/libraries/PTC)
 1. Set your Tools options like the following: <br /><img src="images/boardsettings.png" alt="Board Settings" width="500">
 1. megaTinyCore can save these settings to your board's hardware fuse settings with "Burn Bootloader"

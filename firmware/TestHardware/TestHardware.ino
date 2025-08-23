@@ -9,7 +9,7 @@
  *   (Note: Touch sensor accuracy is not expected to be good considering the arm is directly below
  *    the pad. You should probably use double-tap detection for user interaction instead.)
  *
- * IMPORTANT: <When using SparkFun_ADXL345.h>, you must set the following in SparkFun_ADXL345.cpp:
+ * IMPORTANT: When using <SparkFun_ADXL345.h>, you must set the following in SparkFun_ADXL345.cpp:
  * #define ADXL345_DEVICE (0x1D) //use alternate bus address
  *
  *
