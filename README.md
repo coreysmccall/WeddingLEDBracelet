@@ -1,5 +1,5 @@
 # WeddingLEDBracelet
-Hardware information and firmware for Allison's LED Wedding Bracelet
+Hardware information and firmware for a wedding-themed LED Bracelet.
 
 ![PCB](images/PCB.png)
 
@@ -60,7 +60,7 @@ Do not connect the programmer power when the battery is being used!
 ### Wire up the Programmer
 Get a 3.3V USB-UART adapter (e.g., [DSD TECH SH-U09C5](https://a.co/d/dYEtSY1)) and connect to the programmer breakout in the following way:
 
-* **UDPI:** Connecting the RX port of a USB-to-UART adapter to the UPDI pin. Also connect the TX port of the adapter to the UDPI pin through a series 1KΩ resitor like the drawing [here](https://github.com/mraardvark/pyupdi/blob/master/README.md).
+* **UDPI:** Connect the RX port of a USB-to-UART adapter to the UPDI pin. Also connect the TX port of the adapter to the UDPI pin through a series 1KΩ resitor like the drawing [here](https://github.com/mraardvark/pyupdi/blob/master/README.md).
 * **GND:** Connect to the USB-to-UART adapter's ground pin.
 * **+3V:** Connect to 3.3V. Be careful using voltage rails from the USB-to-UART adapters, many are 5V and this board is not 5V tolerant. Do not connect this pin when using the battery!
 * **RX:** Optionally, connect this to another USB-to-UART RX port for debugging
@@ -80,9 +80,10 @@ The clasp must be closed to power the board, so close the bracelet using the out
 1. You can now load the firmware from this repository and upload using Sketch > Upload Using Programmer
 1. Optionally, connect to the board's UART TX for debugging using a separate serial port connection outside of Arduino (e.g., minicom). This pin is exposed on the programmer breakout labeled "RX". 
 
-## Notes
-- The absolute max voltage of the least tolerant part (accelerometer) is 3.9V. Don't exceed this.
-- Software-based power optimizations are probably not the worth the effort. At 1MHz MCU clock and default accelerometer settings, the battery should be able to maintain at least 25 mA constant draw and a voltage well above brownout (2.0 V) for at least 2 hours. Some measurements verifying this are shown in [PowerTests.md](PowerTests.md).
+## Power Notes
+- The absolute max voltage of the least tolerant part (accelerometer) is 3.9 V. Don't exceed this.
+- Current consumption is ~1 mA total for the MCU and accelerometer, and up to ~7 mA per LED depending on the remaining battery capacity.
+- Software-based power optimizations are probably not the worth the effort. At 1 MHz MCU clock and default accelerometer settings, the battery should be able to maintain at least 25 mA constant draw with a voltage comfortably above brownout (brownout = 2.0 V) for at least 2 hours. That is enough current to power every LED constantly without putting either of the two chips to sleep. Some measurements verifying this are shown in [PowerTests.md](PowerTests.md).
 
 
 ## Useful Links
