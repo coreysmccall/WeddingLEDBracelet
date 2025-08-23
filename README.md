@@ -82,7 +82,7 @@ The clasp must be closed to power the board, so close the bracelet using the out
 
 ## Notes
 - The absolute max voltage of the least tolerant part (accelerometer) is 3.9V. Don't exceed this.
-- Software-based power optimizations are probably not the worth the effort. At 1MHz MCU clock and default accelerometer settings, the battery should be able to maintain up to 25 mA constant draw and a voltage well above brownout (2.0 V) for at least two hours. Some measurements verifying this are shown in [PowerTests.md](PowerTests.md).
+- Software-based power optimizations are probably not the worth the effort. At 1MHz MCU clock and default accelerometer settings, the battery should be able to maintain at least 25 mA constant draw and a voltage well above brownout (2.0 V) for at least 2 hours. Some measurements verifying this are shown in [PowerTests.md](PowerTests.md).
 
 
 ## Useful Links
