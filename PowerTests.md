@@ -16,11 +16,10 @@ Using the battery, it is able to source around ~38 mA at the same maximum step, 
 
 <img src="images/tests/EEMB_LEDCurrentStep_I.png" alt="EEMB_LEDCurrentStep_I" height="270">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/tests/EEMB_LEDCurrentStep_V.png" alt="EEMB_LEDCurrentStep_V" height="250">
 
-The battery is also able to sustain >30 mA DC drain for several minutes with only slowly decreasing voltage plateauing around ~2.5V (~17 Ω ESR). This test was run from [TestLEDMaxCurrent.ino](firmware/TestLEDMaxCurrent/TestLEDMaxCurrent.ino) (not in step mode):
+The battery is also able to sustain >30 mA DC drain for several minutes with only slowly decreasing voltage plateauing around ~2.5V (~17 Ω ESR) after a few minutes. This test was run from [TestLEDMaxCurrent.ino](firmware/TestLEDMaxCurrent/TestLEDMaxCurrent.ino) (not in step mode):
 
 <img src="images/tests/EEMB_drain_I.png" alt="EEMB_drain_I" height="270">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/tests/EEMB_drain_V.png" alt="EEMB_drain_V" height="250">
 
-After 2 hours, the voltage was at 2.37 V at 25 mA (~25 Ω ESR).
 
 ## PWM Pattern Operation
 The Twinkle pattern in [TestPWMs.ino](firmware/TestPWMs/TestPWMs.ino) is a good indication of a typical LED pattern with reasonable brightness (shown in the [README](README.md) gif). This pattern randomly adjusts LED brightness via PWM without any attention to phase alignment. The individual duty cycles are low, but occasionally both PWM timers align and all 8 LEDs briefly draw max current for up to the max duty cycle (~16% @ ~500 Hz = ~310 µs). 
@@ -44,7 +43,9 @@ The LEDs are the main consumers of current. However, the MCU, accelerometer, and
 
 <img src="images/tests/EEMB_TestHardware_I.png" alt="EEMB_TestHardware_I" height="500">
 
+## Battery life
+The stress test was continued for 2 hours, resulting in a voltage of 2.37 V at 25 mA (~25 Ω ESR). Even at absolute maximum power stress, the battery should last beyond 2 hours, likely much much longer with PWM patterns. 
+
 ## Current Draw Guidelines
-- For a relatively fresh battery, it seems to be safe to draw the maximum current of the circuit, at least in bursts of up to ~310 µs (max PWM duty cycle in the [TestPWMs.ino](firmware/TestPWMs/TestPWMs.ino) pattern).
-- Sustained max current draw is possible, with >30 mA delivery for at least a few minutes at a time. ESR increases, but voltage is maintained well above brownout voltage of 2.0V.
-- There is probably no practical benefit from power-optimizing the accelerometer, PWM phase offset, or MCU power states (at least at 1 MHz MCU clock), when using features like the ones in these test programs.
+- It seems safe to draw the maximum current of the circuit, even for multiple hours at a time. ESR increases, but the test battery was still able to deliver 25mA after 2 hours, maintaining a voltage well above brownout. 
+- There is probably no practical benefit from power-optimizing the accelerometer, PWM phase offset, or MCU power states (at least at 1 MHz MCU clock). Battery life and max current is already good enough for at least 2 hours. 
