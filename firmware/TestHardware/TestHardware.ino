@@ -42,8 +42,8 @@ ADXL345 adxl = ADXL345();
 //LED state variables
 byte currentLED = 0;
 byte nextLED = 0;
-unsigned long accelPollingTimer = 0;
-unsigned long LEDUpdateTimer = 0;
+uint32_t accelPollingTimer = 0;
+uint32_t LEDUpdateTimer = 0;
 
 //sensor state variables
 bool doubleTapDetected = false;

@@ -37,7 +37,7 @@ const pin_size_t LEDPins[numLEDPins] = { LED1, LED2, LED3, LED4, LED5, LED6, LED
 //State variables
 int PWMStates[numLEDPins];
 bool PWMDirection[numLEDPins];
-unsigned long updateTimer = 0;
+uint32_t updateTimer = 0;
 
 
 void setup() {
@@ -107,39 +107,14 @@ void initHardware() {
 
 //Attaches PWM hardware timers and port muxes
 void initPWM() {
-
-  //set alternate ports for board
+  //set alternate ports LED4 and LED6
   PORTMUX.CTRLC =
-    (1 << PORTMUX_TCA00_bp) |        // TCA0 WO0 -> PB3 (ALT) (LED6)
-    (1 << PORTMUX_TCA01_bp);         // TCA0 WO1 -> PB4 (ALT) (LED4)
-  PORTMUX.CTRLD |= PORTMUX_TCB0_bm;  // TCB0 WO  -> PC0 (ALT) (LED78)
+    (1 << PORTMUX_TCA00_bp) |  // TCA0 WO0 -> PB3 (ALT) (LED6)
+    (1 << PORTMUX_TCA01_bp);   // TCA0 WO1 -> PB4 (ALT) (LED4)
 
-  /* The following attemopts to setup PWM timers TCA (for LED1-6) and TCB (for LED78) at the same frequency (500Hz) with out-of-phase duty cycles to reduce burst current.
-   * Currently, the phase offset does not work, but should be removed since it doesnt seem very important anyway.
-   * */
-
-  // --- TCA0: split mode @ ~488 Hz (1 MHz / 8 / 256) ---
-  // Enable all six outputs WO0..5 (PB3,PB4,PB2, PA3,PA4,PA5)
-  TCA0.SPLIT.CTRLB =
-    TCA_SPLIT_LCMP0EN_bm | TCA_SPLIT_LCMP1EN_bm | TCA_SPLIT_LCMP2EN_bm | TCA_SPLIT_HCMP0EN_bm | TCA_SPLIT_HCMP1EN_bm | TCA_SPLIT_HCMP2EN_bm;
-
-  TCA0.SPLIT.LPER = 255;  // low half (WO0..2)
-  TCA0.SPLIT.HPER = 255;  // high half (WO3..5)
-
-  // Prescaler ÷8, but don't enable yet (so we can line up phase with TCB)
-  TCA0.SPLIT.CTRLA = TCA_SPLIT_CLKSEL_DIV8_gc;
-
-  // --- TCB0: 8-bit PWM @ ?? kHz (this always seems to always end up at ~500Hz...) ---
-  TCB0.CTRLB = TCB_CNTMODE_PWM8_gc | TCB_CCMPEN_bm;
-  TCB0.CCMP = (255 << 8) | 0;  // TOP=255, duty=0 for now
-
-  // --- Start TCA, then offset TCB phase by 180deg ---
-  TCA0.SPLIT.CTRLA |= TCA_SPLIT_ENABLE_bm;  // start both TCA counters at 0
-  // Half-period phase shift for TCB: preload counter to 128 before enabling. *This does not work though* TCB might need to be stopped to make changes.
-  TCB0.CNT = 128;                                      // 0..255 range in PWM8 mode.
-  TCB0.CTRLA = TCB_CLKSEL_CLKDIV2_gc | TCB_ENABLE_bm;  // start TCB
-
-  //set pins as outputs
+  //enable pins
+  TCA0.SPLIT.CTRLB |= TCA_SPLIT_LCMP0EN_bm;  //enable LED6 PWM
+  TCA0.SPLIT.CTRLB |= TCA_SPLIT_LCMP1EN_bm;  //enable LED4 PWM
   for (int i = 0; i < numLEDPins; i++) {
     pinMode(LEDPins[i], OUTPUT);
   }

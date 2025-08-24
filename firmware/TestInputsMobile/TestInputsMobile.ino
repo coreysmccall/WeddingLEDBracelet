@@ -15,8 +15,8 @@
  * Corey McCall
  */
 
-/***** sensitivity thresholds (max 255 for all values) *****/
-//accelerometer
+/***************** sensitivity thresholds  *****************/
+//accelerometer (max 255 for accelerometer values)
 #define ACTIVITY_THRESHOLD 30   //motion magnitude. 62.5 mg per increment
 #define TAP_THRESHOLD 250       //motion magnitude of tap. 62.5 mg per increment. Keep large to prevent false positives.
 #define TAP_DURATION 60         //duration of tap. 625 μs per increment
@@ -41,7 +41,6 @@
 #define LED6 PIN_PB3
 #define LED78 PIN_PC0
 #define TOUCH_HEART PIN_PA7
-#define TOUCH_HEART PIN_PA7
 const byte numLEDs = 7;
 const pin_size_t LEDPins[numLEDs] = { LED1, LED2, LED3, LED4, LED5, LED6, LED78 };
 
@@ -58,9 +57,9 @@ bool PTC_error = false;
 
 //timers
 #define MOTION_TIMEOUT_MS 2000
-unsigned long lastMotionDetected_ms = 0;
+uint32_t lastMotionDetected_ms = 0;
 #define DOUBLE_TAP_DEBOUNCE_MS 1000
-unsigned long lastDoubleTapDetected_ms = 0;
+uint32_t lastDoubleTapDetected_ms = 0;
 
 void setup() {
   initHardware();
@@ -126,7 +125,7 @@ void updateLEDs() {
   digitalWrite(LED1, PTC_error);
 }
 
-//flash error code forever to indicate a problem.
+//flash to indicate a permanent problem.
 void error() {
   for (int i = 0; i < numLEDs; i++) {
     digitalWrite(LEDPins[i], LOW);
