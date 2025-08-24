@@ -6,8 +6,6 @@
  * - Polls and prints accelerometer reading
  * - Detects motion and double taps via external interrupt from ADXL
  * - Detects press and releases on the "heart" pad using Programmable Touch Controller (PTC)
- *   (Note: Touch sensor accuracy is not expected to be good considering the arm is directly below
- *    the pad. You should probably use double-tap detection for user interaction instead.)
  *
  * IMPORTANT: When using <SparkFun_ADXL345.h>, you must set the following in SparkFun_ADXL345.cpp:
  * #define ADXL345_DEVICE (0x1D) //use alternate bus address
@@ -90,9 +88,9 @@ void printTime() {
 //configures PTC settings
 void configurePTC() {
   //PTC settings
-  //ptc_node_set_thresholds(&heartButton, 0, 0);
+  ptc_node_set_thresholds(&heartButton, 400, 350);
   //ptc_node_set_prescaler(&heartButton, 0);
-  //ptc_node_set_gain(&heartButton, 0);
+  ptc_node_set_gain(&heartButton, PTC_GAIN_1);
   //ptc_node_set_oversamples(&heartButton, 0);
   //ptc_node_set_charge_share_delay(&heartButton, 0);
 }
