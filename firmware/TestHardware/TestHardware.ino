@@ -143,24 +143,24 @@ void ptc_event_cb_touch(const ptc_cb_event_t eventType, cap_sensor_t *node) {
 //configures accelerometer settings and attaches MCU interrupts
 void configureADXL() {
 
-  adxl.setRangeSetting(2);  //range in Gs
+  adxl.setRangeSetting(2);  //range in Gs. This range does not affect the tap/activity detectors below
 
   //attach interrupts to functions: interrupt1=double tap, interrupt2=activity
   adxl.setImportantInterruptMapping(0, 1, 0, 2, 0);
 
   //double tap
   adxl.setTapDetectionOnXYZ(0, 0, 1);  //tap on the sensor (z-axis)
-  adxl.setTapThreshold(100);           // 62.5 mg per increment
-  adxl.setTapDuration(15);             // 625 μs per increment
-  adxl.setDoubleTapLatency(80);        // 1.25 ms per increment
-  adxl.setDoubleTapWindow(500);        // 1.25 ms per increment
-  adxl.doubleTapINT(true);
+  adxl.setTapThreshold(100);           // 62.5 mg per increment, 0-255.
+  adxl.setTapDuration(15);             // 625 μs per increment, 0-255.
+  adxl.setDoubleTapLatency(80);        // 1.25 ms per increment, 0-255.
+  adxl.setDoubleTapWindow(255);        // 1.25 ms per increment, 0-255.
+  adxl.doubleTapINT(true);             //enable interrupt
   attachInterrupt(digitalPinToInterrupt(INT_DOUBLETAP), ISR_DoubleTap, RISING);
 
   //activity
-  adxl.setActivityXYZ(1, 1, 1);
-  adxl.setActivityThreshold(50);  // 62.5mg per increment
-  adxl.ActivityINT(true);
+  adxl.setActivityXYZ(1, 1, 1);   //move in any direction
+  adxl.setActivityThreshold(50);  // 62.5mg per increment, 0-255.
+  adxl.ActivityINT(true);         //enable interrupt
   attachInterrupt(digitalPinToInterrupt(INT_ACTIVITY), ISR_Activity, RISING);
 }
 
@@ -204,7 +204,7 @@ void checkInterrupts(bool printNotifications) {
   }
   if (activityDetected) {
     if (printNotifications)
-      Serial.println("*ACTIVITY DETECTED*");
+      Serial.println("*MOTION DETECTED*");
     activityDetected = false;
   }
 }
