@@ -2,11 +2,8 @@
  * TestPWMs.ino
  * Tests PWMs with twinkle pattern. There are four timers on ATTINY816: TCA, TCB, TCD, and RTC. LED1-6 (red) 
  * are used with the 6 independent outputs of TCA. LED78 controls two separate LEDs (orange) from the single
- * output of TCB. TCD is left to control millis() and micros() timekeeping, and RTC is not used.
- * 
- * Ideally, TCA and TCB should be phase-offset so that the two orange LEDS do not draw current at the same time
- * as any of the red LEDs. This seems to be easier said than done though. Currently the phase shift between 
- * TCA and TCB is not consistant and occationally overlap
+ * output of TCB. TCD is left to control millis() and micros() timekeeping, and RTC is not used. At least this
+ * is how it is supposed to be setup. TCB appears to have some issues that are fixed in analogWriteLEDs().
  *
  *
  * Corey McCall
@@ -48,23 +45,15 @@ void setup() {
 }
 
 void loop() {
-  twinkleLEDs();
-  twinkleLEDs();
-
-
-  //maintain update rate
-  if (UPDATE_PERIOD_MS >= (millis() - updateTimer)) {
-    delay(UPDATE_PERIOD_MS - (millis() - updateTimer));
+  //Update LEDs
+  if ((millis() - updateTimer) >= UPDATE_PERIOD_MS) {
+    updateTimer = millis();
+    stepAnimationTwinkleLEDs();
   }
-  updateTimer = millis();
 }
 
-void twinkleLEDs_lowpower() {
-  ;
-}
-
-
-void twinkleLEDs() {
+//executes one step of twinkle animation
+void stepAnimationTwinkleLEDs() {
   //initialize
   static bool initialized = false;
   if (!initialized) {
@@ -81,16 +70,11 @@ void twinkleLEDs() {
       continue;
 
     //oscillate LED brightness
-    if (PWMDirection[i] == ASCENDING) {
-      PWMStates[i] = min(PWMStates[i] + PWM_STEP, PWM_MAX);
-      if (PWMStates[i] == PWM_MAX)
-        PWMDirection[i] = DESCENDING;
-    } else {
-      PWMStates[i] = max(PWMStates[i] - PWM_STEP, PWM_MIN);
-      if (PWMStates[i] == PWM_MIN)
-        PWMDirection[i] = ASCENDING;
-    }
-    analogWriteWithMUX(LEDPins[i], PWMStates[i]);
+    PWMStates[i] = constrain(PWMStates[i] + ((PWMDirection[i] == ASCENDING) ? PWM_STEP : (-PWM_STEP)), PWM_MIN, PWM_MAX);
+    PWMDirection[i] = (PWMStates[i] == PWM_MAX)   ? DESCENDING
+                      : (PWMStates[i] == PWM_MIN) ? ASCENDING
+                                                  : PWMDirection[i];
+    analogWriteLEDs(LEDPins[i], PWMStates[i]);
   }
 }
 
@@ -107,29 +91,37 @@ void initHardware() {
 
 //Attaches PWM hardware timers and port muxes
 void initPWM() {
+  //default PWM frequency for all channels is clock / 2048 (~488Hz @ 1MHz clock)
+
   //set alternate ports LED4 and LED6
   PORTMUX.CTRLC =
     (1 << PORTMUX_TCA00_bp) |  // TCA0 WO0 -> PB3 (ALT) (LED6)
     (1 << PORTMUX_TCA01_bp);   // TCA0 WO1 -> PB4 (ALT) (LED4)
 
   //enable pins
-  TCA0.SPLIT.CTRLB |= TCA_SPLIT_LCMP0EN_bm;  //enable LED6 PWM
   TCA0.SPLIT.CTRLB |= TCA_SPLIT_LCMP1EN_bm;  //enable LED4 PWM
+  TCA0.SPLIT.CTRLB |= TCA_SPLIT_LCMP0EN_bm;  //enable LED6 PWM
+
   for (int i = 0; i < numLEDPins; i++) {
     pinMode(LEDPins[i], OUTPUT);
   }
 }
 
-//analogWrite that works with portmuxed pins
-void analogWriteWithMUX(pin_size_t pin, byte duty) {
-  switch (pin) {  //LED4 and LED6 use alternate pins
-    case LED4:
-      TCA0.SPLIT.LCMP1 = duty;
+//analogWrite that works with this  hardware configuration
+void analogWriteLEDs(pin_size_t LEDPin, byte brightness) {
+  switch (LEDPin) {
+    case LED4:  //LED4 and LED6 use alternate pins
+      TCA0.SPLIT.LCMP1 = brightness;
       break;
     case LED6:
-      TCA0.SPLIT.LCMP0 = duty;
+      TCA0.SPLIT.LCMP0 = brightness;
+      break;
+    case LED78:  //LED78 needs to be forced to zero for some reason
+      if (brightness)
+        analogWrite(LEDPin, brightness);
+      else digitalWrite(LEDPin, LOW);
       break;
     default:
-      analogWrite(pin, duty);
+      analogWrite(LEDPin, brightness);
   }
 }

@@ -219,7 +219,6 @@ void calculateAnimationIncrement() {
 
 //increment LEDs randomly
 void calculateAnimationRandomize() {
-  nextLED = currentLED;
   while ((nextLED = random(0, 7)) == currentLED)
     ;
 }
