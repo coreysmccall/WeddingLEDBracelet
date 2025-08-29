@@ -37,9 +37,10 @@
 #define DOUBLE_TAP_DEBOUNCE_MS 1000  //minimum time between double-tap presses (for debounce)
 
 //touch button
-#define TOUCH_PRESS_LEVEL 400              //sensitivity to activate touch button
-#define TOUCH_RELEASE_LEVEL 350            //sensitivity to release touch button (set lower than TOUCH_PRESS_LEVEL for some hysteresis)
-#define SLEEP_MODE_PRESS_DURATION_MS 4000  //time to hold button before sleep is engaged. Max 4000 (the PTC calibration fails afer holding for 4 seconds)
+#define TOUCH_PRESS_LEVEL 400         //sensitivity to activate touch button
+#define TOUCH_RELEASE_LEVEL 350       //sensitivity to release touch button (set lower than TOUCH_PRESS_LEVEL for some hysteresis)
+#define SLEEP_PRESS_DURATION_MS 4000  //time to hold button before sleep is engaged. Max 4000 (the PTC calibration fails afer holding for 4 seconds)
+#define WAKE_PRESS_DURATION_MS 2000   //time to hold button before sleep is exited. Max 4000 (the PTC calibration fails afer holding for 4 seconds)
 /***********************************************************/
 
 /******************** animation settings ********************/
@@ -51,7 +52,7 @@
 
 //dance mode settings
 #define DANCE_MIN_BRIGHTNESS 1         //brightness (max 255)
-#define DANCE_MAX_BRIGHTNESS 80       //brightness (max 255)
+#define DANCE_MAX_BRIGHTNESS 80        //brightness (max 255)
 #define DANCE_ANIMATION_PERIOD_MS 80   //update period for LEDs
 #define DANCE_MOTION_COOLDOWN_MS 4000  //cooldown after no movement is detected
 #define DANCE_MOTION_WARMUP_MS 1000    //warmup period after mode is changed
@@ -145,11 +146,18 @@ void PTCHandler() {
   //handle PTC sensor
   ptc_process(millis());
 
-  if (heartPressed && (millis() - lastHeartPressed_ms > SLEEP_MODE_PRESS_DURATION_MS)) {
-    isAsleep = true;
-    heartPressed = false;
-    enterSleep();
-    Serial.println("Sleep");
+  //go to sleep or wake if heart is held
+  if (heartPressed) {
+    if (isAsleep && (millis() - lastHeartPressed_ms > WAKE_PRESS_DURATION_MS)) {
+      Serial.println("Wake");
+      isAsleep = false;
+      heartPressed = false;
+    } else if (!isAsleep && (millis() - lastHeartPressed_ms > SLEEP_PRESS_DURATION_MS)) {
+      Serial.println("Sleep");
+      isAsleep = true;
+      heartPressed = false;
+      enterSleep();
+    }
   }
 }
 
@@ -157,11 +165,6 @@ void PTCHandler() {
 void ptc_event_cb_touch(const ptc_cb_event_t eventType, cap_sensor_t *node) {
   if (PTC_CB_EVENT_TOUCH_DETECT == eventType) {
     Serial.println("Touch");
-    if (isAsleep) {
-      Serial.println("Wake");
-      isAsleep = false;
-    }
-
     heartPressed = true;
     lastHeartPressed_ms = millis();
   } else if (PTC_CB_EVENT_TOUCH_RELEASE == eventType) {
