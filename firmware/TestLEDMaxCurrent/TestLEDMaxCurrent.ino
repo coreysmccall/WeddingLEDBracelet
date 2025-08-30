@@ -24,7 +24,7 @@ const pin_size_t LEDPins[numLEDPins] = { LED1, LED2, LED3, LED4, LED5, LED6, LED
 void setup() {
   initHardware();
 
-  Serial.println("LEDCurrentStep.ino");
+  Serial.println("TestLEDMaxCurrent.ino");
 }
 
 void loop() {

@@ -21,8 +21,9 @@
 #include <SparkFun_ADXL345.h>
 #include <ptc.h>
 
-//enables touch button. Hold to sleep, tap to wake.
-#define ENABLE_TOUCH false 
+//alternate behavior settings
+#define ENABLE_TOUCH false     //Enable touch button. Hold to sleep, tap to wake.
+#define WAKE_ON_RELEASE false  //Wakes up when you release the heart
 
 //definitions
 #define ASCENDING 1
@@ -40,10 +41,10 @@
 #define DOUBLE_TAP_DEBOUNCE_MS 1000  //minimum time between double-tap presses (for debounce)
 
 //touch button
-#define TOUCH_PRESS_LEVEL 400         //sensitivity to activate touch button
-#define TOUCH_RELEASE_LEVEL 350       //sensitivity to release touch button (set lower than TOUCH_PRESS_LEVEL for some hysteresis)
+#define TOUCH_PRESS_LEVEL 400      //sensitivity to activate touch button
+#define TOUCH_RELEASE_LEVEL 350    //sensitivity to release touch button (set lower than TOUCH_PRESS_LEVEL for some hysteresis)
 #define SLEEP_PRESS_DURATION_MS 4000  //time to hold button before sleep is engaged. Max 4000 (the PTC calibration fails afer holding for 4 seconds)
-#define WAKE_PRESS_DURATION_MS 0      //time to hold button before sleep is exited. Max 4000 (the PTC calibration fails afer holding for 4 seconds)
+#define WAKE_PRESS_DURATION_MS 0   //time to hold button before sleep is exited. Max 4000 (the PTC calibration fails afer holding for 4 seconds)
 /***********************************************************/
 
 /******************** animation settings ********************/
@@ -174,13 +175,20 @@ void ptc_event_cb_touch(const ptc_cb_event_t eventType, cap_sensor_t *node) {
   } else if (PTC_CB_EVENT_TOUCH_RELEASE == eventType) {
     Serial.println("Release");
     heartPressed = false;
+    if (WAKE_ON_RELEASE) {
+      isAsleep = false;
+      Serial.println("Wake");
+    }
   }
 }
 
 //enter sleep mode
 void enterSleep() {
   setAllLEDs(0);
-  analogWriteLEDs(LED1, 1);
+  analogWriteLEDs(LED1, WAKE_ON_RELEASE?0:1);
+  
+  //reset dance mode timer
+  lastMotionDetected_ms = 0;
 }
 
 //changes the mode and debounces double-tap detection
