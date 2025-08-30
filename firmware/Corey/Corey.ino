@@ -21,6 +21,9 @@
 #include <SparkFun_ADXL345.h>
 #include <ptc.h>
 
+//enables touch button. Hold to sleep, tap to wake.
+#define ENABLE_TOUCH false 
+
 //definitions
 #define ASCENDING 1
 #define DESCENDING 0
@@ -40,7 +43,7 @@
 #define TOUCH_PRESS_LEVEL 400         //sensitivity to activate touch button
 #define TOUCH_RELEASE_LEVEL 350       //sensitivity to release touch button (set lower than TOUCH_PRESS_LEVEL for some hysteresis)
 #define SLEEP_PRESS_DURATION_MS 4000  //time to hold button before sleep is engaged. Max 4000 (the PTC calibration fails afer holding for 4 seconds)
-#define WAKE_PRESS_DURATION_MS 2000   //time to hold button before sleep is exited. Max 4000 (the PTC calibration fails afer holding for 4 seconds)
+#define WAKE_PRESS_DURATION_MS 0      //time to hold button before sleep is exited. Max 4000 (the PTC calibration fails afer holding for 4 seconds)
 /***********************************************************/
 
 /******************** animation settings ********************/
@@ -110,7 +113,8 @@ void setup() {
 
 void loop() {
   //check for touch events for sleep control
-  PTCHandler();
+  if (ENABLE_TOUCH)
+    PTCHandler();
 
   //don't run animations or respond to inputs when asleep
   if (!isAsleep) {
